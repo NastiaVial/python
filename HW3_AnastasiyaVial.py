@@ -64,7 +64,14 @@ def last_word_from_each_sentence_str(text):
         if len(i) == 0:
             i.pop([])
     last_word_str = " ".join(e)
-    print(last_word_str)
+    return last_word_str
 
+last_word = last_word_from_each_sentence_str(d)
 
-last_word_from_each_sentence_str(d)
+# search index for "paragraph." in order to enter last word of each sentence right after it.
+import re
+index_number = re.search(r"paragraph.", d).end()
+print(index_number)
+
+output_line = d[:index_number+1] + last_word.capitalize() + '. '+ d [:index_number+2]
+print(output_line)

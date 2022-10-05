@@ -40,13 +40,14 @@ tHis iz your homeWork, copy these Text to variable.
 def lowercase_with_first_letter_in_uppercace_with_iz_replacement(text):
     lower_text = []
     lower_text = text.lower().replace(' iz ', ' is ')
-    str = []
+    str_ap = []
     for i in lower_text.split('.'):
-        str.append(i.lstrip().capitalize())
-        first_uppercase_letter_in_sentence = ('. '.join(str))
-    print(first_uppercase_letter_in_sentence)
+        str_ap.append(i.lstrip().capitalize())
+    first_uppercase_letter_in_sentence = ('. '.join(str_ap))
+    return first_uppercase_letter_in_sentence
 
-lowercase_with_first_letter_in_uppercace_with_iz_replacement(a)
+print(lowercase_with_first_letter_in_uppercace_with_iz_replacement(a))
+
 a1 = lowercase_with_first_letter_in_uppercace_with_iz_replacement(a)
 
 def count_whitespaces(text):
@@ -55,11 +56,11 @@ def count_whitespaces(text):
     for i in range(0, len(a)):
         if a[i] == " " or a[i] == "\n":
             count_whitespaces += 1
-    print(count_whitespaces)
+    return count_whitespaces
 
-count_whitespaces(a1)
+print(count_whitespaces(a1))
 
-# # 5. take last word of each sentence and add at the end of the text
+# # 5. take last word of each sentence and add after the "paragraph."
 
 def last_word_from_each_sentence_str(text):
     e = []
@@ -69,21 +70,28 @@ def last_word_from_each_sentence_str(text):
         if len(i) == 0:
             i.pop([])
     last_word_str = " ".join(e)
-    print(last_word_str)
+    return last_word_str
+
+last_word = last_word_from_each_sentence_str(a1)
+print(last_word)
 
 
-last_word_from_each_sentence_str(a1)
+import re
 
-# add last_word_str into middle of the text a1
+# words = re.search(r"paragraph.", a1)
+#
+# def insert_words_inside (words_to_find, words_to_add_inside):
+#     # searching the index for "paragraph."
+#     index_number = words_to_find.end()
+#     result = a1[:index_number] + words_to_add_inside.capitalize() + '. '+ a1 [:index_number+1]
+#     return result
 
-# import re
-# result = re.search(r"paragraph.", a1)
-# print(result.start())
 
-# wrd = 'paragraph.'
-# x = a1.split()
-# res = x.index(wrd) + 1
-# print(res)
+word = r"paragraph."
+def insert_words_inside (words_to_find, words_to_add_inside):
+    # searching the index for "paragraph."
+    index_number = re.search(words_to_find, a1).end()
+    result = a1[:index_number+1] + words_to_add_inside.capitalize() + '. '+ a1 [:index_number+2]
+    return result
 
-# find_index = re.search(r'\b(paragraph)\b', a1)
-# print(find_index.start())
+print(insert_words_inside(word, last_word))
