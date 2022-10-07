@@ -21,10 +21,10 @@ print(temp_dict)
 
 
 #tried this option as well
-from collections import defaultdict
-d = defaultdict(list)
-for dictionary in list_of_dicts:
-    for k, v in dictionary.items():
+# from collections import defaultdict
+# d = defaultdict(list)
+# for dictionary in list_of_dicts:
+#     for k, v in dictionary.items():
 #         try:
 #         if k[0] not in k[1]:
 #             d[k].append(v(None))
