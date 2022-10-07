@@ -6,21 +6,26 @@ from string import ascii_lowercase
 def foo(a):
     final_dict = {}
     temp_dict = {}
-    for dictionary in a:
-        for k, v in dictionary.items():
-            temp_dict.setdefault(k, []).append(v)
-
+    keys = set().union(*list_of_dicts)
+    for dictionary in list_of_dicts:
+        for k in keys:
+            #use get(key) and add default value instead of None
+            temp_dict.setdefault(k, []).append(dictionary.get(k, -1))
+    #use print just to show the result for this exercize
     print(temp_dict)
 #take only the biggest value from temp_dict and rename key with dict number with max value (it`s index value+1)
     for k, v in temp_dict.items():
         if len(v) > 1:
-            final_dict[k+"_"+str(v.index(max(v))+1)] = max(v)
-        else: final_dict[k] = v[0]
+            final_dict[k + "_" + str(v.index(max(v)) + 1)] = max(v)
+        else:
+            final_dict[k] = v[0]
     print(final_dict)
 
+#use my random list_of_dict in foo function
 list_of_dicts = [{choice(ascii_lowercase): randint(0, 100)
                       for i in range(len(ascii_lowercase))} for j in range(randint(2, 10))]
 
+#run the function with my list of dictionaries
 foo(list_of_dicts)
 
 
