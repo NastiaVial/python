@@ -3,8 +3,22 @@
 from random import randint, choice
 from string import ascii_lowercase
 
-def foo(a):
-    final_dict = {}
+
+#function to create random list of dictionaries
+def create_random_list_of_dicts():
+    list_of_dicts = []
+    list_of_dicts = [{choice(ascii_lowercase): randint(0, 100)
+                      for i in range(len(ascii_lowercase))} for j in range(randint(2, 10))]
+    return list_of_dicts
+
+
+random_list = create_random_list_of_dicts()
+print(random_list)
+
+
+#function that takes all keys from list of dictionaries and create one with whole values for each key with default -1
+# for those values that where absent in any of presented dictionaries in list
+def list_of_whole_keys_and_values(list_of_dicts):
     temp_dict = {}
     keys = set().union(*list_of_dicts)
     for dictionary in list_of_dicts:
@@ -12,91 +26,20 @@ def foo(a):
             #use get(key) and add default value instead of None
             temp_dict.setdefault(k, []).append(dictionary.get(k, -1))
     #use print just to show the result for this exercize
-    print(temp_dict)
+    return temp_dict
 #take only the biggest value from temp_dict and rename key with dict number with max value (it`s index value+1)
-    for k, v in temp_dict.items():
-        if len(v) > 1:
-            final_dict[k + "_" + str(v.index(max(v)) + 1)] = max(v)
-        else:
-            final_dict[k] = v[0]
-    print(final_dict)
-
-#use my random list_of_dict in foo function
-list_of_dicts = [{choice(ascii_lowercase): randint(0, 100)
-                      for i in range(len(ascii_lowercase))} for j in range(randint(2, 10))]
-
-#run the function with my list of dictionaries
-foo(list_of_dicts)
 
 
-# HW 3 convert to function
-
-a = """
-tHis iz your homeWork, copy these Text to variable.
-
-  You NEED TO normalize it fROM letter CASEs point oF View. also, create one MORE senTENCE witH LAST WoRDS of each existING SENtence and add it to the END OF this Paragraph.
-
-  it iZ misspeLLing here. fix“iZ” with correct “is”, but ONLY when it Iz a mistAKE.
-
-  last iz TO calculate nuMber OF Whitespace characteRS in this Tex. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
-"""
+union_dictionary = list_of_whole_keys_and_values(random_list)
+print(union_dictionary)
 
 
-def lowercase_with_first_letter_in_uppercace_with_iz_replacement(text):
-    lower_text = []
-    lower_text = text.lower().replace(' iz ', ' is ')
-    str_ap = []
-    for i in lower_text.split('.'):
-        str_ap.append(i.lstrip().capitalize())
-    first_uppercase_letter_in_sentence = ('. '.join(str_ap))
-    return first_uppercase_letter_in_sentence
+# function that takes only highest values for each key
+def dict_with_highest_values(some_dict):
+    final_dict = {}
+    for k, v in some_dict.items():
+        final_dict[k + "_" + str(v.index(max(v)) + 1)] = max(v)
+    return final_dict
 
-print(lowercase_with_first_letter_in_uppercace_with_iz_replacement(a))
+print(dict_with_highest_values(union_dictionary))
 
-a1 = lowercase_with_first_letter_in_uppercace_with_iz_replacement(a)
-
-def count_whitespaces(text):
-    count_whitespaces = 0
-# loop for search each index with space or new row
-    for i in range(0, len(a)):
-        if a[i] == " " or a[i] == "\n":
-            count_whitespaces += 1
-    return count_whitespaces
-
-print(count_whitespaces(a1))
-
-# # 5. take last word of each sentence and add after the "paragraph."
-
-def last_word_from_each_sentence_str(text):
-    e = []
-    for i in text.split('.'):
-        if len(i) > 1:
-            e.append(i.split()[-1])
-        if len(i) == 0:
-            i.pop([])
-    last_word_str = " ".join(e)
-    return last_word_str
-
-last_word = last_word_from_each_sentence_str(a1)
-print(last_word)
-
-
-import re
-
-# words = re.search(r"paragraph.", a1)
-#
-# def insert_words_inside (words_to_find, words_to_add_inside):
-#     # searching the index for "paragraph."
-#     index_number = words_to_find.end()
-#     result = a1[:index_number] + words_to_add_inside.capitalize() + '. '+ a1 [:index_number+1]
-#     return result
-
-
-word = r"paragraph."
-def insert_words_inside (words_to_find, words_to_add_inside):
-    # searching the index for "paragraph."
-    index_number = re.search(words_to_find, a1).end()
-    result = a1[:index_number+1] + words_to_add_inside.capitalize() + '. '+ a1 [:index_number+2]
-    return result
-
-print(insert_words_inside(word, last_word))
