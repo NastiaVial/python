@@ -72,19 +72,18 @@ def main():
         if need_news_input.upper() == "N":
             print("You chose NO. Program is finished.")
             break
+        elif not need_news_input.upper().isalpha():
+            print("Only letters are allowed!  Please, Ty again\n")
 
         elif need_news_input.upper() != "N" and need_news_input.upper() != "Y":
             print("Only 'N' or 'Y' is possible. Please, Ty again\n")
-
-        elif not need_news_input.upper().isalpha():
-            print("Only letters are allowed!  Please, Ty again\n")
 
         elif need_news_input.upper() == "Y":
             try:
                 user_choice_input = int(input("News - 1, Ads - 2, Weather - 3, Astrology - 4.\nPlease, make your choice: "))
             except ValueError:
                 print("Not a valid number, please try again\n")
-
+            news_feed_item = []
             if user_choice_input == 1:
                 user_title = input("Please, write the title:")
                 user_text = input("Please, write the text: ")
@@ -104,6 +103,8 @@ def main():
                 news_feed_item = Astrology(user_zodiac_sign.upper(), user_text.capitalize())
             if news_feed_item:
                 news_feed_item.write_to_file()
+            else:
+                print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 
 
 main()
