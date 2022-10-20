@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, date
-
+import random
 
 class NewsPortal:
     def __init__(self, text: str, type_of_news='Breaking News') -> None:
@@ -26,15 +26,15 @@ class Advertisements(NewsPortal):
         expiration_date = date.today() + timedelta(days=self.ads_duration_in_days)
         return expiration_date
 
-    def calculate_days_left(self):
-        return (self.calculate_expiration_date() - date.today()).days
+    # def calculate_days_left(self):
+    #     return (self.calculate_expiration_date() - date.today()).days
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
             f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"{self.title}\n")
             f.write(self.text)
-            f.write(f"\nActual till: {self.calculate_expiration_date()}. {self.calculate_days_left()} days left.\n")
+            f.write(f"\nExpiration day of advertisement: {self.calculate_expiration_date()}\n")
 
 
 class BreakingNews(NewsPortal):
@@ -57,6 +57,10 @@ class Astrology(NewsPortal):
         self.type_of_news = "Astrology"
         self.zodiac_sign = zodiac_sign
         self.horoscope_for_today = datetime.now().strftime("%d-%m-%Y")
+        self.prediction_number = random.randint(0, 10)
+
+    def prediction_probability(self):
+        return self.prediction_number
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
@@ -64,6 +68,25 @@ class Astrology(NewsPortal):
             f.write(f"Happy horoscope for today: {self.horoscope_for_today}\n")
             f.write(f"Zodiac sign: {self.zodiac_sign}\n")
             f.write(f"{self.text}\n")
+            f.write(f"Probability of horoscope prediction from 1 to 10: {self.prediction_number}\n")
+
+
+class Weather(NewsPortal):
+    def __init__(self, city: str, text: str) -> None:
+        super().__init__(text)
+        self.type_of_news = "Weather"
+        self.city = city
+        self.temperature = random.randint(1, 31)
+
+    def weather_temperature(self):
+        return self.temperature
+
+    def write_to_file(self):
+        with open("nastia_newsfeed.txt", "a") as f:
+            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"Weather forecast for {self.city}\n")
+            f.write(f"{self.text}\n")
+            f.write(f"temperature +{self.temperature} Celsius degrees \n")
 
 
 def main():
@@ -95,8 +118,9 @@ def main():
                 user_expiration_time = input("Please, write number of days for your add to last: ")
                 news_feed_item = Advertisements(user_title.upper(), user_text.capitalize(), user_expiration_time)
             elif user_choice_input == 3:
+                user_city = input("Please, write the city: ")
                 user_text = input("Please, write the text: ")
-                news_feed_item = NewsPortal(user_text.capitalize(), "Weather")
+                news_feed_item = Weather(user_city.capitalize(), user_text.capitalize())
             elif user_choice_input == 4:
                 user_zodiac_sign = input("Please, write zodiac_sign: ")
                 user_text = input("Please, write the text: ")
