@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, date
 import random
 
+
 class NewsPortal:
     def __init__(self, text: str, type_of_news='Breaking News') -> None:
         self.publish_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -106,25 +107,31 @@ def main():
                 user_choice_input = int(input("News - 1, Ads - 2, Weather - 3, Astrology - 4.\nPlease, make your choice: "))
             except ValueError:
                 print("Not a valid number, please try again\n")
+
             news_feed_item = []
             if user_choice_input == 1:
                 user_title = input("Please, write the title:")
                 user_text = input("Please, write the text: ")
                 user_city = input("Please, write the city: ")
                 news_feed_item = BreakingNews(user_title.upper(), user_text.capitalize(), user_city.upper())
+                print("News was successfully written to file\n")
             elif user_choice_input == 2:
                 user_title = input("Please, write the title:")
                 user_text = input("Please, write the text: ")
                 user_expiration_time = input("Please, write number of days for your add to last: ")
                 news_feed_item = Advertisements(user_title.upper(), user_text.capitalize(), user_expiration_time)
+                print("Advertisement was successfully written to file\n")
             elif user_choice_input == 3:
                 user_city = input("Please, write the city: ")
                 user_text = input("Please, write the text: ")
                 news_feed_item = Weather(user_city.capitalize(), user_text.capitalize())
+                print("News for weather was written to file\n")
             elif user_choice_input == 4:
                 user_zodiac_sign = input("Please, write zodiac_sign: ")
                 user_text = input("Please, write the text: ")
                 news_feed_item = Astrology(user_zodiac_sign.upper(), user_text.capitalize())
+                print("Astrological horoscope was successfully written to file\n")
+
             if news_feed_item:
                 news_feed_item.write_to_file()
             else:
