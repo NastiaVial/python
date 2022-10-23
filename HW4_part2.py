@@ -23,7 +23,7 @@ def lowercase_with_first_letter_in_uppercace(text):
 
 
 text_in_lowercase = lowercase_with_first_letter_in_uppercace(a)
-print(text_in_lowercase)
+# print(text_in_lowercase)
 
 
 def replace_iz_is(text_in_lowercase):
@@ -33,7 +33,7 @@ def replace_iz_is(text_in_lowercase):
 
 
 corrected_text = replace_iz_is(text_in_lowercase)
-print(corrected_text)
+# print(corrected_text)
 
 
 def count_whitespaces(text):
@@ -46,7 +46,7 @@ def count_whitespaces(text):
 
 
 qty_of_whitespaces_in_text = count_whitespaces(corrected_text)
-print(qty_of_whitespaces_in_text)
+# print(qty_of_whitespaces_in_text)
 
 # # 5. take last word of each sentence and add after the "paragraph."
 
@@ -62,7 +62,7 @@ def last_word_from_each_sentence_str(text):
 
 
 last_word = last_word_from_each_sentence_str(corrected_text)
-print(last_word)
+# print(last_word)
 
 
 
@@ -75,4 +75,4 @@ def insert_words_inside(words_to_find,words_to_add):
 
 
 word = r"paragraph."
-print(insert_words_inside(word, last_word))
+# print(insert_words_inside(word, last_word))

@@ -66,13 +66,6 @@ Zodiac sign: Leon
 Everything`s gonna be ok
 
 
-
-Breaking News------------------------------
-PEACE!
-World in peace
-Advert_title: , 20-10-2022 10:09:13
-
-
 Astrology----------------------------------
 Happy horoscope for today: 20-10-2022
 Zodiac sign: LEON
@@ -81,31 +74,14 @@ Probability of horoscope prediction from 1 to 10: 2
 
 
 Weather------------------------------------
-Weather for : Really hot!
-Gdansk
-temperature +6 Celsius degrees 
-
-
-Weather------------------------------------
 Weather for : Gdansk
 Cold!!
 temperature +7 Celsius degrees 
 
 
-Ads----------------------------------------
-SELL A CAR
-Very beautifull car
-Actual till: 2022-11-09
+Breaking News------------------------------
+TITLE
+Text
+CITY , 21-10-2022 14:48:47
 
 
-Weather------------------------------------
-Weather forecast for Gdansk
-Really worm autumn in 2022 year
-temperature +26 Celsius degrees 
-
-
-Astrology----------------------------------
-Happy horoscope for today: 20-10-2022
-Zodiac sign: LION
-Super day
-Probability of horoscope prediction from 1 to 10: 4
