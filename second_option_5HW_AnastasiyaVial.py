@@ -44,7 +44,7 @@ class BreakingNews(NewsPortal):
         self.city = input("Please, write the city: \n").upper()
 
     def write_to_file(self):
-        with open("nastia_newsfeed.txt", "a") as f:
+        with open("testnews.txt", "a") as f:
             f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"{self.title}\n")
             f.write(self.text)
@@ -64,7 +64,7 @@ class Astrology(NewsPortal):
         return self.prediction_number
 
     def write_to_file(self):
-        with open("nastia_newsfeed.txt", "a") as f:
+        with open("testnews.txt", "a") as f:
             f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"Happy horoscope for today: {self.horoscope_for_today}\n")
             f.write(f"Zodiac sign: {self.zodiac_sign}\n")
@@ -80,15 +80,12 @@ class Weather(NewsPortal):
         self.city = input("Please, write the city: \n").upper()
         self.temperature = random.randint(1, 31)
 
-    def weather_temperature(self):
-        return self.temperature
-
     def write_to_file(self):
-        with open("nastia_newsfeed.txt", "a") as f:
+        with open("testnews.txt", "a") as f:
             f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"Weather forecast for {self.city}\n")
             f.write(f"{self.text}\n")
-            f.write(f"temperature +{self.weather_temperature()} Celsius degrees \n")
+            f.write(f"temperature +{self.temperature} Celsius degrees \n")
         print("\nNews for weather was written to file\n")
 
 
@@ -110,13 +107,13 @@ def main():
             except ValueError:
                 print("Not a valid number, please try again\n")
             if user_choice_input == 1:
-                return BreakingNews()
+                return BreakingNews().write_to_file()
             elif user_choice_input == 2:
-                return Advertisements()
+                return Advertisements().write_to_file()
             elif user_choice_input == 3:
-                return Weather()
+                return Weather().write_to_file()
             elif user_choice_input == 4:
-                return Astrology()
+                return Astrology().write_to_file()
             else:
                 print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 

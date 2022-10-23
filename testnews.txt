@@ -1,0 +1,25 @@
+
+
+BreakingNews-------------------------------
+TITLE
+text
+CITY , 21-10-2022 16:03:22
+
+
+Ads----------------------------------------
+TITLE
+text
+Actual till: 2022-11-02
+
+
+Astrology----------------------------------
+Happy horoscope for today: 23-10-2022
+Zodiac sign: SIGN
+text
+Probability of horoscope prediction from 1 to 10: 9
+
+
+Weather------------------------------------
+Weather forecast for CITY
+text
+temperature +18 Celsius degrees 
