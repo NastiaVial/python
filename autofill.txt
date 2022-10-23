@@ -1,0 +1,29 @@
+1
+news_title:
+peace!
+
+news_city:
+everywhere
+
+news text:
+world in peace
+
+2
+advert_title:
+sell a bike
+
+advert_name:
+please buy
+
+qty_of_days:
+15
+
+3
+weather:
+Gdansk
+VERY WORM WINTER THIS YEAR IS PLANNING
+
+4
+astrology:
+Leon
+everything`s gonna be ok

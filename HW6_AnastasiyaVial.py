@@ -125,21 +125,21 @@ class AutoFill:
         formatted_lines = self.read_file()
         if self.code_number_of_news_for_autofill == 1:
             user_title = formatted_lines[2]
-            user_city = formatted_lines[4]
-            user_text = formatted_lines[1]
+            user_city = formatted_lines[5]
+            user_text = formatted_lines[8]
             news_item = BreakingNews(user_title, user_text, user_city)
         elif self.code_number_of_news_for_autofill == 2:
-            user_title = formatted_lines[7]
-            user_text = formatted_lines[10]
-            user_expiration_time = formatted_lines[15]
+            user_title = formatted_lines[12]
+            user_text = formatted_lines[15]
+            user_expiration_time = formatted_lines[18]
             news_item = Advertisements(user_title, user_text, user_expiration_time)
         elif self.code_number_of_news_for_autofill == 3:
-            user_city = formatted_lines[19]
-            user_text = formatted_lines[20]
-            news_item = NewsPortal(user_city, user_text)
+            user_city = formatted_lines[22]
+            user_text = formatted_lines[23]
+            news_item = Weather(user_city, user_text)
         elif self.code_number_of_news_for_autofill == 4:
-            user_zodiac_sign = formatted_lines[24]
-            user_text = formatted_lines[25]
+            user_zodiac_sign = formatted_lines[26]
+            user_text = formatted_lines[27]
             news_item = Astrology(user_zodiac_sign, user_text)
         if news_item:
             news_item.write_to_file()
@@ -167,7 +167,7 @@ def main():
 
             if manual_or_auto_fill == 1:
                 try:
-                    user_choice_input = int(input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4."))
+                    user_choice_input = int(input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
                 except ValueError:
                     print("Not a number, please try again")
 

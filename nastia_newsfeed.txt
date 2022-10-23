@@ -85,3 +85,33 @@ Text
 CITY , 21-10-2022 14:48:47
 
 
+
+
+Breaking News------------------------------
+TITLE
+Text
+CITY , 23-10-2022 19:54:05
+
+
+Breaking News------------------------------
+TITLE
+Text
+CITY , 23-10-2022 19:55:42
+
+
+Breaking News------------------------------
+Peace!
+World in peace
+Everywhere , 23-10-2022 19:59:47
+
+
+Ads----------------------------------------
+Sell a bike
+Please buy
+Expiration day of advertisement: 2022-11-07
+
+
+Weather------------------------------------
+Weather forecast for Gdansk
+Very worm winter this year is planning
+temperature +5 Celsius degrees 
