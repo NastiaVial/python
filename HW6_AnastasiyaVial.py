@@ -67,7 +67,7 @@ class Astrology(NewsPortal):
         self.type_of_news = "Astrology"
         self.zodiac_sign = zodiac_sign
         self.horoscope_for_today = datetime.now().strftime("%d-%m-%Y")
-        self.prediction_number = random.randint(0, 10)
+        self.prediction_number = random.randint(1, 10)
 
     def prediction_probability(self):
         return self.prediction_number
