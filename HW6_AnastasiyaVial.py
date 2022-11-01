@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timedelta, date
 from HW4_part2 import lowercase_with_first_letter_in_uppercace
+from HW7_AnastasiyaVial import count_worlds_and_letters
 import random
 
 
@@ -13,7 +14,7 @@ class NewsPortal:
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
-            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"\n\n{self.type_of_news}" + " " + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(self.text)
             f.write(f"\n{self.publish_date}\n")
             f.write('-' * 43 + '\n')
@@ -38,7 +39,7 @@ class Advertisements(NewsPortal):
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
-            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"\n\n{self.type_of_news}" + " " + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"{self.title}\n")
             f.write(self.text)
             f.write(f"\nExpiration day of advertisement: {self.calculate_expiration_date()}\n")
@@ -53,7 +54,7 @@ class BreakingNews(NewsPortal):
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
-            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"\n\n{self.type_of_news}" + " " + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"{self.title}\n")
             f.write(self.text)
             f.write(f"\n{self.city} , {self.publish_date}\n")
@@ -73,7 +74,7 @@ class Astrology(NewsPortal):
 
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
-            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"\n\n{self.type_of_news}" + " " + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"Happy horoscope for today: {self.horoscope_for_today}\n")
             f.write(f"Zodiac sign: {self.zodiac_sign}\n")
             f.write(f"{self.text}\n")
@@ -87,25 +88,21 @@ class Weather(NewsPortal):
         self.city = city
         self.temperature = random.randint(1, 31)
 
-    def weather_temperature(self):
-        return self.temperature
-
     def write_to_file(self):
         with open("nastia_newsfeed.txt", "a") as f:
-            f.write(f"\n\n{self.type_of_news}" + ('-' * (43 - len(self.type_of_news))) + '\n')
+            f.write(f"\n\n{self.type_of_news}" + " " + ('-' * (43 - len(self.type_of_news))) + '\n')
             f.write(f"Weather forecast for {self.city}\n")
             f.write(f"{self.text}\n")
             f.write(f"temperature +{self.temperature} Celsius degrees \n")
 
 
-# class for auto filling news from file
+# class for autofilling news from file
 class AutoFill:
-    def __init__(self, code_number_of_news_for_autofill,
-                 path=r"C:\Users\Anastasiya_Vial\PycharmProjects\pythonProject\autofill.txt"):
+    def __init__(self, code_number_of_news_for_autofill, path=os.path.realpath("autofill1.txt")):
         self.code_number_of_news_for_autofill = code_number_of_news_for_autofill
         self.path = path
 
-# read file and convert text to lowercase with first letter in uppercase using finunction from HW4
+# read file and convert text to lowercase with first letter in uppercase using function from HW4
     def read_file(self):
         with open(self.path, 'r') as file:
             lines = [line.rstrip() for line in file]
@@ -123,26 +120,32 @@ class AutoFill:
 # after reading file, take exact news/advertisement/weather/astrology as per code number
     def write_to_file_from_autofill(self):
         formatted_lines = self.read_file()
-        if self.code_number_of_news_for_autofill == 1:
-            user_title = formatted_lines[2]
-            user_city = formatted_lines[5]
-            user_text = formatted_lines[8]
-            news_item = BreakingNews(user_title, user_text, user_city)
-        elif self.code_number_of_news_for_autofill == 2:
-            user_title = formatted_lines[12]
-            user_text = formatted_lines[15]
-            user_expiration_time = formatted_lines[18]
-            news_item = Advertisements(user_title, user_text, user_expiration_time)
-        elif self.code_number_of_news_for_autofill == 3:
-            user_city = formatted_lines[22]
-            user_text = formatted_lines[23]
-            news_item = Weather(user_city, user_text)
-        elif self.code_number_of_news_for_autofill == 4:
-            user_zodiac_sign = formatted_lines[26]
-            user_text = formatted_lines[27]
-            news_item = Astrology(user_zodiac_sign, user_text)
-        if news_item:
-            news_item.write_to_file()
+        for i in range(int(self.code_number_of_news_for_autofill)):
+            if formatted_lines[0] == "1":
+                user_title = formatted_lines[1]
+                user_city = formatted_lines[2]
+                user_text = formatted_lines[3]
+                BreakingNews(user_title, user_text, user_city).write_to_file()
+                formatted_lines = formatted_lines[4:]
+                print("\nNews was successfully written to file\n")
+            elif formatted_lines[0] == "2":
+                user_title = formatted_lines[1]
+                user_text = formatted_lines[2]
+                user_ads_duration_in_days = formatted_lines[3]
+                Advertisements(user_title, user_text, user_ads_duration_in_days).write_to_file()
+                print("\nAdvertisement was successfully written to file\n")
+                formatted_lines = formatted_lines[4:]
+            elif formatted_lines[0] == "3":
+                user_city = formatted_lines[1]
+                user_text = formatted_lines[2]
+                Weather(user_city, user_text).write_to_file()
+                print("\nNews for weather was written to file\n")
+                formatted_lines = formatted_lines[3:]
+            elif formatted_lines[0] == "4":
+                user_zodiac_sign = formatted_lines[1]
+                user_text = formatted_lines[2]
+                Astrology(user_zodiac_sign, user_text).write_to_file()
+                print("\nAstrological horoscope was successfully written to file\n")
 
 
 # input function
@@ -167,7 +170,7 @@ def main():
 
             if manual_or_auto_fill == 1:
                 try:
-                    user_choice_input = int(input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
+                    user_choice_input = int(input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4."))
                 except ValueError:
                     print("Not a number, please try again")
 
@@ -201,39 +204,19 @@ def main():
                     print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 
             elif manual_or_auto_fill == 2:
-                try:
-                    path = input("Please, provide path to your file. Press enter to use default path.\n")
-                except ValueError:
-                    print("not correct path, please try again\n")
+                path = input("Please, provide path to your file. Press enter to use default path.\n")
                 try:
                     user_choice_autofill = int(input("Please choose code_number for autofill:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
                 except ValueError:
                     print("Not a number, please try again\n")
                 autofill_file = []
-                if user_choice_autofill == 1 and path == '':
-                    autofill_file = AutoFill(1)
-                    print("\nNews was successfully written to file\n")
-                elif user_choice_autofill == 2 and path == '':
-                    autofill_file = AutoFill(2)
-                    print("\nAdvertisement was successfully written to file\n")
-                elif user_choice_autofill == 3 and path == '':
-                    autofill_file = AutoFill(3)
-                    print("\nNews for weather was written to file\n")
-                elif user_choice_autofill == 4 and path == '':
-                    autofill_file = AutoFill(4)
-                    print("\nAstrological horoscope was successfully written to file\n")
-                elif user_choice_autofill == 1 and path != '':
-                    autofill_file = AutoFill(1, path=path)
-                    print("\nNews was successfully written to file\n")
-                elif user_choice_autofill == 2 and path != '':
-                    autofill_file = AutoFill(2, path=path)
-                    print("\nAdvertisement was successfully written to file\n")
-                elif user_choice_autofill == 3 and path != '':
-                    autofill_file = AutoFill(3, path=path)
-                    print("\nNews for weather was written to file\n")
-                elif user_choice_autofill == 4 and path != '':
-                    autofill_file = AutoFill(4, path=path)
-                    print("\nAstrological horoscope was successfully written to file\n")
+                if 1 < user_choice_autofill > 4:
+                    print("Not a valid number, please try again\n")
+                elif user_choice_autofill != '' and path == '':
+                    autofill_file = AutoFill(user_choice_autofill)
+                elif user_choice_autofill != '' and path != '':
+                    autofill_file = AutoFill(user_choice_autofill, path=path)
+
                 if autofill_file:
                     autofill_file.write_to_file_from_autofill()
                 else:
@@ -244,3 +227,5 @@ def main():
 
 
 main()
+
+count_worlds_and_letters()
