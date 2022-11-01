@@ -18,6 +18,18 @@ Zodiac sign: LION
 Everything will be super and even better! enjoy!
 
 
+Weather ------------------------------------
+Very worm winter this year is planning
+19-10-2022 22:33:59
+-------------------------------------------
+
+
+Breaking News ------------------------------
+Peace!
+News_title:
+News:text: , 19-10-2022 23:08:30
+
+
 Breaking News ------------------------------
 WINTER IS COMING
 Cold and windy weather is coming
@@ -220,5 +232,13 @@ Expiration day of advertisement: 2022-11-16
 Weather ------------------------------------
 Weather forecast for Gdansk
 Very worm winter this year is planning
-temperature +18 Celsius degrees
+temperature +18 Celsius degrees 
+
+
+Astrology ----------------------------------
+Happy horoscope for today: 01-11-2022
+Zodiac sign: Leon
+Everything`s gonna be ok
+Probability of horoscope prediction from 1 to 10: 10
+
 
