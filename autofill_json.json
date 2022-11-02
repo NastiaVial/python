@@ -1,0 +1,20 @@
+{
+  "Advertisements":
+    { "type":"Advertisements",
+      "title": "SELL A CAR",
+      "text": "Please buy my beautiful car",
+      "ads_duration_in_days": 15},
+  "BreakingNews":
+    { "type":"BreakingNews",
+      "title": "HALLOWEENG",
+      "text": "HALLOWEENG is comming",
+      "city": "Gdansk"},
+  "Weather":
+    { "type":"Weather",
+      "text": "Snowy winter planned in 2022",
+      "city": "Gdansk"},
+  "Astrology":
+    { "type":"Astrology",
+      "zodiac_sign": "Scorpio",
+      "text": "be careful"}
+}
