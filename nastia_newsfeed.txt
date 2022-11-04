@@ -313,3 +313,28 @@ Weather ------------------------------------
 Weather forecast for be careful
 Scorpio
 temperature +11 Celsius degrees 
+
+
+Ads ----------------------------------------
+Sell a motorbike 
+want to sell beautiful motorbike
+Expiration day of advertisement: 2022-11-19
+
+
+Breaking News ------------------------------
+Breaking news
+so interesting breaking news
+Warsaw , 04-11-2022 11:01:42
+
+
+Weather ------------------------------------
+Weather forecast for wonderful snowy winter
+Warsaw
+temperature +13 Celsius degrees 
+
+
+Astrology ----------------------------------
+Happy horoscope for today: 04-11-2022
+Zodiac sign: everything gonna be ok
+Scorpio
+Probability of horoscope prediction from 1 to 10: 2

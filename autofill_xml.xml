@@ -1,0 +1,20 @@
+﻿<NewsPortal>
+    <name news="Advertisement">
+        <title>Sell a motorbike </title>
+        <text>want to sell beautiful motorbike</text>
+        <ads_duration_in_days>15</ads_duration_in_days>
+    </name>
+    <name news="BreakingNews">
+        <title>Breaking news</title>
+        <text>so interesting breaking news</text>
+        <city>Warsaw</city>
+    </name>
+    <name news="Weather">
+        <text>wonderful snowy winter</text>
+        <city>Warsaw</city>
+    </name>
+    <name news="Astrology">
+        <text>everything gonna be ok</text>
+        <zodiac_sign>Scorpio</zodiac_sign>
+    </name>
+</NewsPortal>
