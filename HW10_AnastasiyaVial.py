@@ -27,8 +27,8 @@ class NewsPortal:
                             'DATABASE= news.db') as conn:
             cursor = conn.cursor()
             try:
-                cursor.execute(f"INSERT into news "
-                               f"VALUES ({self.publish_date}, {self.type_of_news}, {self.text})")
+                cursor.execute("INSERT into ads "
+                               "VALUES('{}', '{}', '{}')".format(self.publish_date, self.type_of_news, self.text))
             except Exception as error:
                 print("Duplicates are not allowed. Please try again", error)
             else:
@@ -64,9 +64,9 @@ class Advertisements(NewsPortal):
                             'DATABASE= news.db') as conn:
             cursor = conn.cursor()
             try:
-                cursor.execute(f"INSERT into ads "
-                               f"VALUES ({self.publish_date},{self.type_of_news},{self.title} "
-                               f"{self.text},{self.calculate_expiration_date()})")
+                cursor.execute("INSERT into ads "
+                               "VALUES('{}', '{}', '{}', '{}', '{}')".format(self.publish_date, self.type_of_news,
+                                                                             self.title, self.text, self.ads_duration_in_days))
             except Exception as error:
                 print("Duplicates are not allowed. Please try again", error)
             else:
@@ -92,9 +92,8 @@ class BreakingNews(NewsPortal):
                             'DATABASE= news.db') as conn:
             cursor = conn.cursor()
             try:
-                cursor.execute(f"INSERT into breaking_news "
-                               f"VALUES({self.publish_date},{self.type_of_news},"
-                               f"{self.title},{self.text},{self.city})")
+                cursor.execute("INSERT into breaking_news "
+                               "VALUES('{}', '{}', '{}', '{}', '{}')".format(self.publish_date, self.type_of_news, self.title, self.text, self.city))
             except Exception as error:
                 print("Duplicates are not allowed. Please try again", error)
             else:
@@ -126,9 +125,8 @@ class Astrology(NewsPortal):
                             'DATABASE= news.db') as conn:
             cursor = conn.cursor()
             try:
-                cursor.execute(f"INSERT into astrology "
-                               f"VALUES ({self.publish_date}, {self.type_of_news}, "
-                               f"{self.text}, {self.zodiac_sign})")
+                cursor.execute("INSERT into astrology "
+                               "VALUES('{}', '{}', '{}', '{}')".format(self.publish_date, self.type_of_news, self.text, self.zodiac_sign))
             except Exception as error:
                 print("Duplicates are not allowed. Please try again", error)
             else:
@@ -153,10 +151,10 @@ class Weather(NewsPortal):
         with pyodbc.connect('DRIVER=SQLite3 ODBC Driver;'
                             'DATABASE= news.db') as conn:
             cursor = conn.cursor()
+            # query = {self.publish_date}, {self.type_of_news}, {self.text}, {self.city}
+            # print(query)
             try:
-                cursor.execute(f"INSERT into weather "
-                               f"VALUES({self.publish_date},{self.type_of_news}, "
-                               f"{self.text},{self.city})")
+                cursor.execute("INSERT into weather VALUES('{}', '{}', '{}', '{}')".format(self.publish_date, self.type_of_news, self.text, self.city))
             except Exception as error:
                 print("Duplicates are not allowed. Please try again", error)
             else:
@@ -195,6 +193,7 @@ class AutoFill:
                 BreakingNews(user_title, user_text, user_city).write_to_file()
                 formatted_lines = formatted_lines[4:]
                 print("\nNews was successfully written to file\n")
+                BreakingNews(user_title, user_text, user_city).write_to_sql()
             elif formatted_lines[0] == "2":
                 user_title = formatted_lines[1]
                 user_text = formatted_lines[2]
@@ -202,17 +201,114 @@ class AutoFill:
                 Advertisements(user_title, user_text, user_ads_duration_in_days).write_to_file()
                 print("\nAdvertisement was successfully written to file\n")
                 formatted_lines = formatted_lines[4:]
+                Advertisements(user_title, user_text, user_ads_duration_in_days).write_to_sql()
             elif formatted_lines[0] == "3":
                 user_city = formatted_lines[1]
                 user_text = formatted_lines[2]
                 Weather(user_city, user_text).write_to_file()
                 print("\nNews for weather was written to file\n")
                 formatted_lines = formatted_lines[3:]
+                Weather(user_city, user_text).write_to_sql()
             elif formatted_lines[0] == "4":
                 user_zodiac_sign = formatted_lines[1]
                 user_text = formatted_lines[2]
                 Astrology(user_zodiac_sign, user_text).write_to_file()
                 print("\nAstrological horoscope was successfully written to file\n")
+                Astrology(user_zodiac_sign, user_text).write_to_sql()
+
+
+class JsonAutoFill:
+    def __init__(self, code_number_of_news_for_json_autofill, path=os.path.realpath("autofill_json.json")):
+        self.path = path
+        self.code_number_of_news_for_json_autofill = code_number_of_news_for_json_autofill
+
+    # def read_file(self):
+    #     with open(self.path) as json_file:
+    #         fields = json.load(json_file)
+        # return fields
+
+    def write_to_file_from_autofill(self):
+        with open(self.path) as json_file:
+            fields = json.load(json_file)
+
+            if self.code_number_of_news_for_json_autofill == 1:
+                news_data = fields["BreakingNews"]
+                BreakingNews(news_data.get("title"), news_data.get("text"),
+                             news_data.get("city")).write_to_file()
+                print("\nNews was successfully written to file\n")
+                BreakingNews(news_data.get("title"), news_data.get("text"),
+                             news_data.get("city")).write_to_sql()
+            if self.code_number_of_news_for_json_autofill == 2:
+                adv_data = fields["Advertisements"]
+                Advertisements(adv_data.get("title"), adv_data.get("text"),
+                               adv_data.get("ads_duration_in_days")).write_to_file()
+                print("\nAdvertisement was successfully written to file\n")
+                Advertisements(adv_data.get("title"), adv_data.get("text"),
+                               adv_data.get("ads_duration_in_days")).write_to_sql()
+            if self.code_number_of_news_for_json_autofill == 3:
+                weather_data = fields["Weather"]
+                Weather(weather_data.get("text"), weather_data.get("city")).write_to_file()
+                print("\nNews for weather was written to file\n")
+                Weather(weather_data.get("text"), weather_data.get("city")).write_to_sql()
+            if self.code_number_of_news_for_json_autofill == 4:
+                astrology_data = fields["Astrology"]
+                Astrology(astrology_data.get("text"), astrology_data.get("zodiac_sign")).write_to_file()
+                print("\nAstrological horoscope was successfully written to file\n")
+                Astrology(astrology_data.get("text"), astrology_data.get("zodiac_sign")).write_to_sql()
+
+
+class XmlAutoFill:
+    def __init__(self, code_number_of_news_for_xml_autofill, path=os.path.realpath("autofill_xml.xml")):
+        self.code_number_of_news_for_xml_autofill = code_number_of_news_for_xml_autofill
+        self.path = path
+
+    def write_to_file_from_autofill(self):
+        tree = ET.parse(self.path)
+        root = tree.getroot()
+        if self.code_number_of_news_for_xml_autofill == 1:
+            for i in root.iter('name'):
+                if i.attrib.get('news') == 'Advertisement':
+                    for title in i.findall('title'):
+                        user_title = title.text
+                    for text in i.findall('text'):
+                        user_text = text.text
+                    for ads_duration in i.findall('ads_duration_in_days'):
+                        user_ads_duration = ads_duration.text
+                    Advertisements(user_title, user_text, user_ads_duration).write_to_file()
+                    print("\nAdvertisement was successfully written to file\n")
+                    Advertisements(user_title, user_text, user_ads_duration).write_to_sql()
+        if self.code_number_of_news_for_xml_autofill == 2:
+            for i in root.iter('name'):
+                if i.attrib.get('news') == 'BreakingNews':
+                    for title in i.findall('title'):
+                        user_title = title.text
+                    for text in i.findall('text'):
+                        user_text = text.text
+                    for city in i.findall('city'):
+                        user_city = city.text
+                    BreakingNews(user_title, user_text, user_city).write_to_file()
+                    print("\nNews was successfully written to file\n")
+                    BreakingNews(user_title, user_text, user_city).write_to_sql()
+        if self.code_number_of_news_for_xml_autofill == 3:
+            for i in root.iter('name'):
+                if i.attrib.get('news') == 'Weather':
+                    for text in i.findall('text'):
+                        user_text = text.text
+                    for city in i.findall('city'):
+                        user_city = city.text
+                    Weather(user_text, user_city).write_to_file()
+                    print("\nNews for weather was written to file\n")
+                    Weather(user_text, user_city).write_to_sql()
+        if self.code_number_of_news_for_xml_autofill == 4:
+            for i in root.iter('name'):
+                if i.attrib.get('news') == 'Astrology':
+                    for text in i.findall('text'):
+                        user_text = text.text
+                    for zodiac_sign in i.findall('zodiac_sign'):
+                        user_zodiac_sign = zodiac_sign.text
+                    Astrology(user_text, user_zodiac_sign).write_to_file()
+                    print("\nAstrological horoscope was successfully written to file\n")
+                    Astrology(user_text, user_zodiac_sign).write_to_sql()
 
 
 class SqlNewsFill:
@@ -220,31 +316,12 @@ class SqlNewsFill:
         with pyodbc.connect('DRIVER=SQLite3 ODBC Driver;'
                             'DATABASE= news.db') as self.conn:
             self.cursor = self.conn.cursor()
-            self._create_tables()
+            self.create_tables()
 
-    # def read_file(self):
-    #     cursor = self.conn.cursor()
-    #     for row in cursor.execute("SELECT publish_date, type_of_news, text_content FROM news"):
-    #         return NewsPortal(row['text_content'])
-    #
-    #     for row in cursor.execute(
-    #             "SELECT publish_date, type_of_news, title_of_news, text_content, ads_duration FROM ads"):
-    #         return Advertisements(row['text_content'], row['ads_duration'])
-    #
-    #     for row in cursor.execute(
-    #             "SELECT publish_date, type_of_news, title_of_news, text_content, city FROM breaking_news"):
-    #         return BreakingNews(row['text_content'], row['city'])
-    #
-    #     for row in cursor.execute("SELECT publish_date, type_of_news, text_content, zodiac_sign FROM astrology"):
-    #         return Astrology(row['text_content'], row['zodiac_sign'])
-    #
-    #     for row in cursor.execute("SELECT publish_date, type_of_news, text_content, city FROM weather"):
-    #         return Weather(row['text_content'], row['city'])
+    def insert_to_sql(self):
+        self.read_file().write_to_sql()
 
-    # def insert_to_sql(self):
-    #     self.read_file().write_to_sql
-
-    def _create_tables(self):
+    def create_tables(self):
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS news (
                 publish_date VARCHAR(20) NOT NULL,
@@ -318,15 +395,13 @@ def main():
 
         elif need_news_input.upper() == "Y":
             try:
-                manual_or_auto_fill = int(input(
-                    "Add news manually - 1, add news from txt file - 2, \nPlease, enter your choice: "))
+                manual_or_auto_fill = int(input("Add news manually - 1, add news from txt file - 2, \n add news from json file - 3, add news from xml file - 4, add news to sql - 5\nPlease, enter your choice: "))
             except ValueError:
                 print("Not a number, please try again")
 
             if manual_or_auto_fill == 1:
                 try:
-                    user_choice_input = int(
-                        input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4."))
+                    user_choice_input = int(input("Please choose code_number:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4."))
                 except ValueError:
                     print("Not a number, please try again")
 
@@ -343,7 +418,6 @@ def main():
                     user_expiration_time = input("Please, write number of days for your add to last: ")
                     news_feed_item = Advertisements(user_title.upper(), user_text.capitalize(), user_expiration_time)
                     print("\nAdvertisement was successfully written to file\n")
-
                 elif user_choice_input == 3:
                     user_city = input("Please, write the city: ")
                     user_text = input("Please, write the text: ")
@@ -364,8 +438,7 @@ def main():
             elif manual_or_auto_fill == 2:
                 path = input("Please, provide path to your file. Press enter to use default path.\n")
                 try:
-                    user_choice_autofill = int(input(
-                        "Please choose code_number for autofill:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
+                    user_choice_autofill = int(input("Please choose code_number for autofill:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
                 except ValueError:
                     print("Not a number, please try again\n")
                 autofill_file = []
@@ -381,10 +454,55 @@ def main():
                 else:
                     print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 
+            elif manual_or_auto_fill == 3:
+                path = input("Please, provide path to your file. Press enter to use default path.\n")
+                try:
+                    user_choice_json_autofill = int(input("Please choose code_number for autofill:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
+                except ValueError:
+                    print("Not a number, please try again\n")
+                autofill_json_file = []
+                if 1 < user_choice_json_autofill > 4:
+                    print("Not a valid number, please try again\n")
+                elif user_choice_json_autofill != '' and path == '':
+                    autofill_json_file = JsonAutoFill(user_choice_json_autofill)
+                elif user_choice_json_autofill != '' and path != '':
+                    autofill_json_file = JsonAutoFill(user_choice_json_autofill, path=path)
+
+                if autofill_json_file:
+                    autofill_json_file.write_to_file_from_autofill()
+                else:
+                    print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
+
+            elif manual_or_auto_fill == 4:
+                path = input("Please, provide path to your file. Press enter to use default path.\n")
+                try:
+                    user_choice_xml_autofill = int(input(
+                        "Please choose code_number for autofill:\nNews - 1, Ads - 2, Weather - 3, Astrology - 4.\n"))
+                except ValueError:
+                    print("Not a number, please try again\n")
+                autofill_xml_file = []
+                if 1 < user_choice_xml_autofill > 4:
+                    print("Not a valid number, please try again\n")
+                elif user_choice_xml_autofill != '' and path == '':
+                    autofill_xml_file = XmlAutoFill(user_choice_xml_autofill)
+                elif user_choice_xml_autofill != '' and path != '':
+                    autofill_xml_file = XmlAutoFill(user_choice_xml_autofill, path=path)
+
+                if autofill_xml_file:
+                    autofill_xml_file.write_to_file_from_autofill()
+                else:
+                    print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
+
+            elif manual_or_auto_fill == 5:
+                SqlNewsFill().write_to_sql()
+
             else:
                 print("Only 1 or 2 or 3 or 4 or 5 is possible. Please try again\n")
 
 
+SqlNewsFill()
+
 main()
 
-# count_worlds_and_letters()
+count_worlds_and_letters()
+
