@@ -494,7 +494,7 @@ def main():
                     print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 
             else:
-                print("Only 1 or 2 or 3 or 4 or 5 is possible. Please try again\n")
+                print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
 
 
 SqlNewsFill()
