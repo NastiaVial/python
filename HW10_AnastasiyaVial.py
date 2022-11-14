@@ -395,7 +395,7 @@ def main():
 
         elif need_news_input.upper() == "Y":
             try:
-                manual_or_auto_fill = int(input("Add news manually - 1, add news from txt file - 2, \n add news from json file - 3, add news from xml file - 4, add news to sql - 5\nPlease, enter your choice: "))
+                manual_or_auto_fill = int(input("Add news manually - 1, add news from txt file - 2, \n add news from json file - 3, add news from xml file - 4\nPlease, enter your choice: "))
             except ValueError:
                 print("Not a number, please try again")
 
@@ -492,9 +492,6 @@ def main():
                     autofill_xml_file.write_to_file_from_autofill()
                 else:
                     print("Only 1 or 2 or 3 or 4 is possible. Please try again\n")
-
-            elif manual_or_auto_fill == 5:
-                SqlNewsFill().write_to_sql()
 
             else:
                 print("Only 1 or 2 or 3 or 4 or 5 is possible. Please try again\n")
